@@ -42,9 +42,11 @@ int part(int *array, int start, int end, size_t size)
 			}
 		}
 	}
-	swap_elements(&array[end], &array[index + 1]);
 	if (index + 1 != end)
+	{
+		swap_elements(&array[end], &array[index + 1]);
 		print_array(array, size);
+	}
 	return (index + 1);
 }
 /**
