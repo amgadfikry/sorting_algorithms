@@ -22,6 +22,7 @@ void swap_elements(int *first, int *second)
  * @array: pointer to array
  * @start: start of array
  * @end: end of array
+ * @size: size of array
  * Return: pivot index
  */
 
@@ -33,14 +34,20 @@ int part(int *array, int start, int end, size_t size)
 	{
 		if (array[i] < array[end])
 		{
-			swap_elements(&array[i], &array[++index]);
-			print_array(array, size);
+			index++;
+			if (i != index)
+			{
+				swap_elements(&array[i], &array[index]);
+				print_array(array, size);
+			}
 		}
 	}
-	swap_elements(&array[end], &array[++index]);
-	print_array(array, size);
-
-	return (index);
+	if (index + 1 != end)
+	{
+		swap_elements(&array[end], &array[index + 1]);
+		print_array(array, size);
+	}
+	return (index + 1);
 }
 /**
  * sorting - sort array to left and right accord to pivot
@@ -53,7 +60,7 @@ int part(int *array, int start, int end, size_t size)
 
 void sorting(int *array, int start, int end, size_t size)
 {
-	if (start < end )
+	if (start < end)
 	{
 		int pivot;
 
@@ -73,7 +80,7 @@ void sorting(int *array, int start, int end, size_t size)
 
 void quick_sort(int *array, size_t size)
 {
-	int start = 0, end = (int)size - 1;	
+	int start = 0, end = (int)size - 1;
 
 	if (array == NULL || size < 2)
 		return;
