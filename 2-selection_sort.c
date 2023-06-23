@@ -29,7 +29,9 @@ void selection_sort(int *array, size_t size)
 	size_t i, j;
 	int *swap;
 
-	for (i = 0; i < size; i++)
+	if (size < 2)
+		return;
+	for (i = 0; i < size - 1; i++)
 	{
 		swap = &array[i];
 		for (j = i + 1; j < size; j++)
@@ -37,7 +39,8 @@ void selection_sort(int *array, size_t size)
 			if (*swap > array[j])
 				swap = &array[j];
 		}
-		swap_elements(swap, &array[i]);
+		if (swap != &array[i])
+			swap_elements(swap, &array[i]);
 		print_array(array, size);
 	}
 }
