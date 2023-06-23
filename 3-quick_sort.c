@@ -1,22 +1,6 @@
 #include "sort.h"
 
 /**
- * swap_elements - swap two elements in array
- * @first: first element to swap
- * @second: second element to swap
- * Return: nothing
- */
-
-void swap_elements(int *first, int *second)
-{
-	int temp;
-
-	temp = *first;
-	*first = *second;
-	*second = temp;
-}
-
-/**
  * part - get pivot in array in it's position and
  * smaller numbers to left
  * @array: pointer to array
@@ -28,7 +12,7 @@ void swap_elements(int *first, int *second)
 
 int part(int *array, int start, int end, size_t size)
 {
-	int index = start - 1, i, key = array[end];
+	int index = start - 1, i, key = array[end], temp;
 
 	for (i = start; i < end; i++)
 	{
@@ -37,14 +21,18 @@ int part(int *array, int start, int end, size_t size)
 			index++;
 			if (i != index)
 			{
-				swap_elements(&array[i], &array[index]);
+				temp = array[i];
+				array[i] = array[index];
+				array[index] = temp;
 				print_array(array, size);
 			}
 		}
 	}
 	if (index + 1 != end)
 	{
-		swap_elements(&array[end], &array[index + 1]);
+		temp = array[end];
+		array[end] = array[index + 1];
+		array[index + 1] = temp;
 		print_array(array, size);
 	}
 	return (index + 1);
