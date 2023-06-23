@@ -35,9 +35,11 @@ int part(int *array, int start, int end, size_t size)
 		if (array[i] <= key)
 		{
 			index++;
-			swap_elements(&array[i], &array[index]);
 			if (i != index)
+			{
+				swap_elements(&array[i], &array[index]);
 				print_array(array, size);
+			}
 		}
 	}
 	swap_elements(&array[end], &array[index + 1]);
