@@ -32,21 +32,17 @@ int part(int *array, int start, int end, size_t size)
 
 	for (i = start; i < end; i++)
 	{
-		if (array[i] < array[end])
+		if (array[i] <= array[end])
 		{
 			index++;
+			swap_elements(&array[i], &array[index]);
 			if (i != index)
-			{
-				swap_elements(&array[i], &array[index]);
 				print_array(array, size);
-			}
 		}
 	}
+	swap_elements(&array[end], &array[index + 1]);
 	if (index + 1 != end)
-	{
-		swap_elements(&array[end], &array[index + 1]);
 		print_array(array, size);
-	}
 	return (index + 1);
 }
 /**
@@ -82,7 +78,7 @@ void quick_sort(int *array, size_t size)
 {
 	int start = 0, end = (int)size - 1;
 
-	if (array == NULL || size < 2)
+	if (size < 2)
 		return;
 	sorting(array, start, end, size);
 }
