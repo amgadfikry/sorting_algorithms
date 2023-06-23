@@ -28,11 +28,11 @@ void swap_elements(int *first, int *second)
 
 int part(int *array, int start, int end, size_t size)
 {
-	int index = start - 1, i;
+	int index = start - 1, i, key = array[end];
 
 	for (i = start; i < end; i++)
 	{
-		if (array[i] <= array[end])
+		if (array[i] <= key)
 		{
 			index++;
 			swap_elements(&array[i], &array[index]);
@@ -56,10 +56,10 @@ int part(int *array, int start, int end, size_t size)
 
 void sorting(int *array, int start, int end, size_t size)
 {
+	int pivot;
+
 	if (start < end)
 	{
-		int pivot;
-
 		pivot = part(array, start, end, size);
 		sorting(array, start, pivot - 1, size);
 		sorting(array, pivot + 1, end, size);
@@ -76,9 +76,7 @@ void sorting(int *array, int start, int end, size_t size)
 
 void quick_sort(int *array, size_t size)
 {
-	int start = 0, end = (int)size - 1;
-
 	if (size < 2)
 		return;
-	sorting(array, start, end, size);
+	sorting(array, 0, (int)size - 1, size);
 }
