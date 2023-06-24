@@ -32,7 +32,7 @@ void cocktail_sort_list(listint_t **list)
 	listint_t *ptr = *list, *right = NULL, *left = NULL;
 	int swap = 1;
 
-	if (!list || !(*list)->next)
+	if (!list || !*list || !(*list)->next)
 		swap = 0;
 	while (swap)
 	{
