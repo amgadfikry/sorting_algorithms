@@ -29,22 +29,23 @@ void swap_nodes(listint_t *first, listint_t *second)
  * Return: 0 if no swap or 1 if swap
  */
 
-int check_greater(listint_t **list, listint_t *ptr, listint_t *right)
+int check_greater(listint_t **list, listint_t **ptr, listint_t **right)
 {
 	int swap = 0;
+	listint_t *p = *ptr;
 
-	while (ptr->next != right)
+	while (p->next != *right)
 	{
-		if (ptr->n > ptr->next->n)
+		if (p->n > p->next->n)
 		{
-			swap_nodes(ptr, ptr->next);
+			swap_nodes(p, p->next);
 			swap = 1;
-			if (ptr == *list)
-				*list = ptr->prev;
+			if (p == *list)
+				*list = p->prev;
 			print_list(*list);
 		}
 		else
-			ptr = ptr->next;
+			p = p->next;
 	}
 
 	return (swap);
@@ -59,22 +60,23 @@ int check_greater(listint_t **list, listint_t *ptr, listint_t *right)
  * Return: 0 if no swap or 1 if swap
  */
 
-int check_lesser(listint_t **list, listint_t *ptr, listint_t *left)
+int check_lesser(listint_t **list, listint_t **ptr, listint_t **left)
 {
 	int swap = 0;
+	listint_t *p = *ptr;
 
-	while (ptr->prev != left)
+	while (p->prev != *left)
 	{
-		if (ptr->n < ptr->prev->n)
+		if (p->n < p->prev->n)
 		{
-			swap_nodes(ptr->prev, ptr);
+			swap_nodes(p->prev, p);
 			swap = 1;
-			if (ptr->prev == NULL)
-				*list = ptr;
+			if (p->prev == NULL)
+				*list = p;
 			print_list(*list);
 		}
 		else
-			ptr = ptr->prev;
+			p = p->prev;
 	}
 
 	return (swap);
@@ -96,13 +98,13 @@ void cocktail_sort_list(listint_t **list)
 		return;
 	while (swap)
 	{
-		swap = check_greater(&*list, ptr, right);
+		swap = check_greater(&*list, &ptr, &right);
 		right = ptr;
 		ptr = right->prev;
 		if (swap == 0)
 			break;
 
-		swap = check_lesser(&*list, ptr, left);
+		swap = check_lesser(&*list, &ptr, &left);
 		left = ptr;
 		ptr = left->next;
 	}
