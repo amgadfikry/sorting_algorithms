@@ -5,10 +5,11 @@
  * change int inside it
  * @first: first node
  * @second: second node
+ * @list: pointer to list
  * Return: nothing
  */
 
-void swap_nodes(listint_t *first, listint_t *second)
+void swap_nodes(listint_t *first, listint_t *second, listint_t **list)
 {
 	first->next = second->next;
 	if (second->next)
@@ -18,68 +19,10 @@ void swap_nodes(listint_t *first, listint_t *second)
 	second->prev = first->prev;
 	first->prev = second;
 	second->next = first;
-}
-
-/**
- * check_greater - check greater number and move it to
- * right most of list
- * @list: list original
- * @ptr: ptr of first element
- * @right: right most end
- * Return: 0 if no swap or 1 if swap
- */
-
-int check_greater(listint_t **list, listint_t **ptr, listint_t **right)
-{
-	int swap = 0;
-	listint_t *p = *ptr;
-
-	while (p->next != *right)
-	{
-		if (p->n > p->next->n)
-		{
-			swap_nodes(p, p->next);
-			swap = 1;
-			if (p == *list)
-				*list = p->prev;
-			print_list(*list);
-		}
-		else
-			p = p->next;
-	}
-
-	return (swap);
-}
-
-/**
- * check_lesser - check lesser number and move it to
- * left most of list
- * @list: list original
- * @ptr: ptr of first element
- * @left: left most end
- * Return: 0 if no swap or 1 if swap
- */
-
-int check_lesser(listint_t **list, listint_t **ptr, listint_t **left)
-{
-	int swap = 0;
-	listint_t *p = *ptr;
-
-	while (p->prev != *left)
-	{
-		if (p->n < p->prev->n)
-		{
-			swap_nodes(p->prev, p);
-			swap = 1;
-			if (p->prev == NULL)
-				*list = p;
-			print_list(*list);
-		}
-		else
-			p = p->prev;
-	}
-
-	return (swap);
+	if (first == *list)
+		*list = first->prev;
+	if (second->prev == NULL)
+		*list = second;
 }
 
 /**
@@ -95,16 +38,37 @@ void cocktail_sort_list(listint_t **list)
 	int swap = 1;
 
 	if (!list || !*list || !(*list)->next)
-		return;
+		swap = 0;
 	while (swap)
 	{
-		swap = check_greater(&*list, &ptr, &right);
+		swap = 0;
+		while (ptr->next != right)
+		{
+			if (ptr->n > ptr->next->n)
+			{
+				swap_nodes(ptr, ptr->next, &*list);
+				swap = 1;
+				print_list(*list);
+			}
+			else
+				ptr = ptr->next;
+		}
 		right = ptr;
 		ptr = right->prev;
 		if (swap == 0)
 			break;
-
-		swap = check_lesser(&*list, &ptr, &left);
+		swap = 0;
+		while (ptr->prev != left)
+		{
+			if (ptr->n < ptr->prev->n)
+			{
+				swap_nodes(ptr->prev, ptr, &*list);
+				swap = 1;
+				print_list(*list);
+			}
+			else
+				ptr = ptr->prev;
+		}
 		left = ptr;
 		ptr = left->next;
 	}
