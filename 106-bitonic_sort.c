@@ -26,6 +26,6 @@ void swap_elements(int *first, int *second)
 
 void bitonic_sort(int *array, size_t size)
 {
-	if (size < 2)
+	if (array == NULL || size < 2)
 		return;
 }
