@@ -11,18 +11,23 @@
 
 void counting(int *arr, int size, int place)
 {
-	int *output, *count, i;
+	int *output, *count, i, max = 0;
 
-	count = malloc(sizeof(int) * 10);
+	for (i = 0; i < size; i++)
+	{
+		if ((arr[i] / place) % 10 > max)
+			max = (arr[i] / place) % 10;
+	}
+	count = malloc(sizeof(int) * (max + 1));
 	if (count == NULL)
 		return;
-	for (i = 0; i < 10; i++)
+	for (i = 0; i < max; i++)
 		count[i] = 0;
 	for (i = 0; i < size; i++)
 		count[(arr[i] / place) % 10] += 1;
-	for (i = 1; i < size; i++)
+	for (i = 1; i < max; i++)
 		count[i] += count[i - 1];
-	for (i = size - 1; i > 0; i--)
+	for (i = max; i > 0; i--)
 		count[i] = count[i - 1];
 	count[0] = 0;
 	output = malloc(sizeof(int) * size);
@@ -54,6 +59,8 @@ void radix_sort(int *array, size_t size)
 {
 	int i, place = 1, max;
 
+	if (size < 2)
+		return;
 	max = array[0];
 	for (i = 0; i < (int)size; i++)
 	{
